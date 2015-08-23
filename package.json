@@ -1,0 +1,25 @@
+{
+  "name": "hubot-twitter-egosearch",
+  "version": "0.0.1",
+  "description": "Twitter ego-searching for hubot",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qckanemoto/hubot-twitter-egosearch.git"
+  },
+  "keywords": [
+    "hubot",
+    "hubot-scripts",
+    "twitter",
+    "search"
+  ],
+  "author": "qckanemoto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qckanemoto/hubot-twitter-egosearch/issues"
+  },
+  "homepage": "https://github.com/qckanemoto/hubot-twitter-egosearch"
+}
