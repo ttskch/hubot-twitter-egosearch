@@ -1,3 +1,50 @@
-# [wip] hubot-twitter-egosearch
+# hubot-twitter-egosearch
+
+[![NPM version](https://badge.fury.io/js/hubot-twitter-egosearch.svg)](http://badge.fury.io/js/hubot-twitter-egosearch)
 
 Twitter ego-searching for hubot.
+
+## Installation
+
+Install via npm.
+
+```bash
+$ cd /path/to/hubot
+$ npm install --save hubot-twitter-egosearch
+```
+
+And add to `external-scripts.json`.
+
+```bash
+$ cat external-scripts.json
+["hubot-twitter-egosearch"]
+```
+
+## Configuration
+
+```bash
+# required
+$ export HUBOT_TWITTER_EGOSEARCH_CONSUMER_KEY="twitter_consumer_key_here"
+$ export HUBOT_TWITTER_EGOSEARCH_CONSUMER_SECRET="twitter_consumer_secret_here"
+$ export HUBOT_TWITTER_EGOSEARCH_ACCESS_TOKEN="twitter_access_token_here"
+$ export HUBOT_TWITTER_EGOSEARCH_ACCESS_TOKEN_SECRET="twitter_access_token_secret_here"
+
+# optional
+$ export HUBOT_TWITTER_EGOSEARCH_SEARCH_INTERVAL="1000 * 60 * 5" # defaults to "1000 * 60" msec
+```
+
+## Usage
+
+```bash
+# Start searching with "keyword"
+hubot> hubot egosearch add keyword
+
+# Stop searching with "keyword"
+hubot> hubot egosearch rm keyword
+
+# List searching keywords
+hubot> hubot egosearch list
+
+# Also can use advanced search query
+hubot> hubot egosearch add "hubot-twitter-egosearch" -from:qckanemoto
+```
