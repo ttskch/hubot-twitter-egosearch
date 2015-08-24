@@ -36,11 +36,11 @@ $ export HUBOT_TWITTER_EGOSEARCH_SEARCH_INTERVAL="1000 * 60 * 5" # defaults to "
 ## Usage
 
 ```bash
-# Start searching with "keyword"
-hubot> hubot egosearch add keyword
+# Start searching with "hubot script"
+hubot> hubot egosearch add hubot script
 
-# Stop searching with "keyword"
-hubot> hubot egosearch rm keyword
+# Stop searching with "hubot script"
+hubot> hubot egosearch rm hubot script
 
 # List searching keywords
 hubot> hubot egosearch list
