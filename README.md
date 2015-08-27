@@ -1,6 +1,7 @@
 # hubot-twitter-egosearch
 
-[![NPM version](https://badge.fury.io/js/hubot-twitter-egosearch.svg)](http://badge.fury.io/js/hubot-twitter-egosearch)
+[![npm version](https://img.shields.io/npm/v/hubot-twitter-egosearch.svg)](https://www.npmjs.com/package/hubot-twitter-egosearch)
+[![npm downloads](https://img.shields.io/npm/dm/hubot-twitter-egosearch.svg)](https://www.npmjs.com/package/hubot-twitter-egosearch)
 
 Twitter ego-searching for hubot.
 
