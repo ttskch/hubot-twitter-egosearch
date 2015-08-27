@@ -68,7 +68,6 @@ loopSearching = (robot) ->
 searchQueries = (robot) ->
   for key, query of queries
     robot.brain.data.egosearch[key] = query.serialize()
-    console.log(query.q)
     client.get 'search/tweets', {q: query.q, count: maxTweets, since_id: query.since_id}, (error, tweets, response) ->
       if error
         console.log error
