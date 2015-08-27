@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/qckanemoto/hubot-twitter-egosearch",
   "dependencies": {
+    "dateformat": "^1.0.11",
     "sha1": "^1.1.1",
     "twitter": "^1.2.5"
   }

@@ -19,6 +19,7 @@
 
 sha1 = require 'sha1'
 twitter = require 'twitter'
+dateformat = require 'dateformat'
 
 queries = {}
 config =
@@ -80,7 +81,8 @@ searchQueries = (robot) ->
         for tweet in tweets.statuses.reverse()
           text = getTweetUrl(tweet.user, tweet.id_str)
           if process.env.HUBOT_TWITTER_EGOSEARCH_SHOW_DETAIL
-            text += "\n> from #{tweet.user.name} (@#{tweet.user.screen_name})\n> #{tweet.text}"
+            date = dateformat(new Date(tweet.created_at), 'yyyy-mm-dd')
+            text += "\n> #{tweet.text}\n> \n> - #{tweet.user.name} (@#{tweet.user.screen_name}) #{date}"
           robot.send envelope, text
 
 class Query
