@@ -1,6 +1,6 @@
 {
   "name": "hubot-twitter-egosearch",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Twitter ego-searching for hubot",
   "main": "index.coffee",
   "scripts": {
