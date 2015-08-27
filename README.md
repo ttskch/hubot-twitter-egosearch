@@ -31,6 +31,7 @@ $ export HUBOT_TWITTER_EGOSEARCH_ACCESS_TOKEN="twitter_access_token_here"
 $ export HUBOT_TWITTER_EGOSEARCH_ACCESS_TOKEN_SECRET="twitter_access_token_secret_here"
 
 # optional
+$ export HUBOT_TWITTER_EGOSEARCH_SHOW_DETAIL="true" # if "true" then response will be more detailed
 $ export HUBOT_TWITTER_EGOSEARCH_SEARCH_INTERVAL="1000 * 60 * 5" # defaults to "1000 * 60" msec
 ```
 

@@ -6,6 +6,7 @@
 #   HUBOT_TWITTER_EGOSEARCH_CONSUMER_SECRET
 #   HUBOT_TWITTER_EGOSEARCH_ACCESS_TOKEN
 #   HUBOT_TWITTER_EGOSEARCH_ACCESS_TOKEN_SECRET
+#   HUBOT_TWITTER_EGOSEARCH_SHOW_DETAIL # if "true" then response will be more detailed
 #   HUBOT_TWITTER_EGOSEARCH_SEARCH_INTERVAL # defaults to "1000 * 60" msec
 #
 # Commands:
@@ -77,7 +78,10 @@ searchQueries = (robot) ->
         updateQuery robot, query
         envelope = user: query.user, room: query.user.room
         for tweet in tweets.statuses.reverse()
-          robot.send envelope, getTweetUrl(tweet.user, tweet.id_str)
+          text = getTweetUrl(tweet.user, tweet.id_str)
+          if process.env.HUBOT_TWITTER_EGOSEARCH_SHOW_DETAIL
+            text += "\n> from #{tweet.user.name} (@#{tweet.user.screen_name})\n> #{tweet.text}"
+          robot.send envelope, text
 
 class Query
   constructor: (q, since_id, user) ->
