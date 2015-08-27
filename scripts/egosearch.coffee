@@ -112,7 +112,7 @@ module.exports = (robot) ->
     text = ''
     for key, query of queries
       if msg.message.user.room == query.user.room
-        text += "\"#{query.q}\" (#{getSearchUrl(query.q)}) @#{query.user.room}\n"
+        text += "#{query.q} (#{getSearchUrl(query.q)}) @#{query.user.room}\n"
     if text.length > 0
       msg.send text
     else
