@@ -17,7 +17,6 @@
 # Author:
 #   qckanemoto
 
-sha1 = require 'sha1'
 twitter = require 'twitter'
 dateformat = require 'dateformat'
 
@@ -36,31 +35,29 @@ getSearchUrl = (q) ->
 getTweetUrl = (user, id_str) ->
   "https://twitter.com/#{user.screen_name}/status/#{id_str}"
 
+persistQuery = (robot, id, query) ->
+  queries[id] = query
+  robot.brain.data.egosearch[id] = query.serialize()
+
 createQuery = (robot, msg, q, user) ->
   query = new Query(q, null, user)
-  key = sha1(q)
-  queries[key] = query
-  robot.brain.data.egosearch[key] = query.serialize()
-  msg.send "Now searching for #{q} (#{getSearchUrl(q)})"
+  id = Math.floor(Math.random() * 100000) while !id? || queries[id]?
+  persistQuery robot, id, query
+  msg.send "[#{id}] Now searching for #{q} (#{getSearchUrl(q)})"
 
-updateQuery = (robot, query) ->
-  key = sha1(query.q)
-  queries[key] = query
-  robot.brain.data.egosearch[key] = query.serialize()
-
-deleteQuery = (robot, msg, q) ->
-  key = sha1(q)
-  if queries[key]?
-    delete queries[key]
-    delete robot.brain.data.egosearch[key]
-    msg.send "Stopped searching"
+deleteQuery = (robot, msg, id) ->
+  if queries[id]?
+    q = queries[id].q
+    delete queries[id]
+    delete robot.brain.data.egosearch[id]
+    msg.send "Stopped searching for #{q}"
   else
     msg.send "Searcing job does not exist"
 
 loadQueriesFromBrain = (robot) ->
-  for own key, serialized of robot.brain.data.egosearch
+  for own id, serialized of robot.brain.data.egosearch
     query = new Query(serialized[0], serialized[1], serialized[2])
-    queries[key] = query
+    queries[id] = query
 
 loopSearching = (robot) ->
   setInterval ->
@@ -68,17 +65,17 @@ loopSearching = (robot) ->
   , eval(process.env.HUBOT_TWITTER_EGOSEARCH_SEARCH_INTERVAL) or 1000 * 60
 
 searchQueries = (robot) ->
-  for key, query of queries
+  for id, query of queries
     client.get 'search/tweets', {q: query.q, count: maxTweets, since_id: query.since_id}, (error, tweets, response) ->
       if error
         console.log error
       else if tweets.statuses? and tweets.statuses.length > 0
         # remember last tweet
         query.since_id = tweets.statuses[0].id_str
-        updateQuery robot, query
+        persistQuery robot, id, query
         envelope = user: query.user, room: query.user.room
         for tweet in tweets.statuses.reverse()
-          text = getTweetUrl(tweet.user, tweet.id_str)
+          text = "[#{id}] #{query.q}\n" + getTweetUrl(tweet.user, tweet.id_str)
           if process.env.HUBOT_TWITTER_EGOSEARCH_SHOW_DETAIL
             date = dateformat(new Date(tweet.created_at), 'yyyy-mm-dd')
             text += "\n> #{tweet.text}\n> \n> - #{tweet.user.name} (@#{tweet.user.screen_name}) #{date}"
@@ -111,9 +108,9 @@ module.exports = (robot) ->
 
   robot.respond /egosearch (?:list|ls)/i, (msg) ->
     text = ''
-    for key, query of queries
+    for id, query of queries
       if msg.message.user.room == query.user.room
-        text += "#{query.q} (#{getSearchUrl(query.q)}) @#{query.user.room}\n"
+        text += "[#{id}] #{query.q} (#{getSearchUrl(query.q)}) @#{query.user.room}\n"
     if text.length > 0
       msg.send text
     else
