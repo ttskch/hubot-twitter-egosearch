@@ -66,20 +66,29 @@ loopSearching = (robot) ->
 
 searchQueries = (robot) ->
   for id, query of queries
-    client.get 'search/tweets', {q: query.q, count: maxTweets, since_id: query.since_id}, (error, tweets, response) ->
-      if error
-        console.log error
-      else if tweets.statuses? and tweets.statuses.length > 0
-        # remember last tweet
-        query.since_id = tweets.statuses[0].id_str
-        persistQuery robot, id, query
-        envelope = user: query.user, room: query.user.room
-        for tweet in tweets.statuses.reverse()
-          text = "[#{id}] #{query.q}\n" + getTweetUrl(tweet.user, tweet.id_str)
+    searchQueryAsync(id, query)
+      .then (data) ->
+        data.query.since_id = data.tweets.statuses[0].id_str
+        persistQuery robot, data.id, data.query
+        envelope = user: data.query.user, room: data.query.user.room
+        for tweet in data.tweets.statuses.reverse()
+          text = "[#{data.id}] #{data.query.q}\n" + getTweetUrl(tweet.user, tweet.id_str)
           if process.env.HUBOT_TWITTER_EGOSEARCH_SHOW_DETAIL
             date = dateformat(new Date(tweet.created_at), 'yyyy-mm-dd')
             text += "\n> #{tweet.text}\n> \n> - #{tweet.user.name} (@#{tweet.user.screen_name}) #{date}"
           robot.send envelope, text
+      .catch (error) ->
+        console.log error
+
+searchQueryAsync = (id, query) ->
+  new Promise (resolve, reject) ->
+    client.get 'search/tweets', {q: query.q, count: maxTweets, since_id: query.since_id}, (error, tweets, response) ->
+      if error
+        reject error
+      else if !tweets.statuses? or tweets.statuses.length <= 0
+        reject 'No results'
+      else
+        resolve {id: id, query: query, tweets: tweets}
 
 class Query
   constructor: (q, since_id, user) ->
