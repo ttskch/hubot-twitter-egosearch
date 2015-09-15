@@ -39,14 +39,19 @@ $ export HUBOT_TWITTER_EGOSEARCH_SEARCH_INTERVAL="1000 * 60 * 5" # defaults to "
 
 ```bash
 # Start searching with "hubot script"
-hubot> hubot egosearch add hubot script
+human> hubot egosearch add hubot script
+hubot> [13551] Now searching for hubot script
 
 # Stop searching with "hubot script"
-hubot> hubot egosearch rm hubot script
+human> hubot egosearch rm 3551
+hubot> Stopped searching for hubot script
 
 # List searching keywords
-hubot> hubot egosearch list
+human> hubot egosearch list
+hubot> [13551] hubot script @room
+hubot> [53595] some search word @room
 
 # Also can use advanced search query
-hubot> hubot egosearch add "hubot-twitter-egosearch" -from:qckanemoto
+human> hubot egosearch add "hubot-twitter-egosearch" -from:qckanemoto
+hubot> [29107] Now searching for "hubot-twitter-egosearch" -from:qckanemoto
 ```
