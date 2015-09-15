@@ -43,7 +43,7 @@ human> hubot egosearch add hubot script
 hubot> [13551] Now searching for hubot script
 
 # Stop searching with "hubot script"
-human> hubot egosearch rm 3551
+human> hubot egosearch rm 13551
 hubot> Stopped searching for hubot script
 
 # List searching keywords
