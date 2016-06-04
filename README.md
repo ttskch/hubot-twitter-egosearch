@@ -52,6 +52,6 @@ hubot> [13551] hubot script @room
 hubot> [53595] some search word @room
 
 # Also can use advanced search query
-human> hubot egosearch add "hubot-twitter-egosearch" -from:qckanemoto
-hubot> [29107] Now searching for "hubot-twitter-egosearch" -from:qckanemoto
+human> hubot egosearch add "hubot-twitter-egosearch" -from:ttskch
+hubot> [29107] Now searching for "hubot-twitter-egosearch" -from:ttskch
 ```

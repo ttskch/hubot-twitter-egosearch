@@ -15,7 +15,7 @@
 #   hubot egosearch list - List searching queries
 #
 # Author:
-#   qckanemoto
+#   ttskch
 
 twitter = require 'twitter'
 dateformat = require 'dateformat'
